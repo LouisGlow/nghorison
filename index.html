@@ -1,0 +1,1683 @@
+<!doctype html>
+<html lang="af">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NG Gemeente Horison</title>
+  <link rel="icon" href="assets/images/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #FDF8F3;
+      --surface:     #FFFFFF;
+      --fg:          #2C1E13;
+      --muted:       #7A6558;
+      --border:      #E2D5C9;
+      --accent:      #007CBA;
+      --accent-dark: #006BA1;
+      --navy:        #082D45;
+      --navy-mid:    #0A3A58;
+      --warm:        #F5EDE2;
+      --warm-deep:   #EDE0D3;
+      --shadow-sm:   0 1px 8px rgba(44,30,19,0.06);
+      --shadow:      0 2px 20px rgba(44,30,19,0.09);
+      --shadow-lg:   0 8px 40px rgba(44,30,19,0.13);
+      --r:           5px;
+      --r-lg:        10px;
+      --font-d:      'Playfair Display', Georgia, serif;
+      --font-b:      'Fira Sans', -apple-system, system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-b);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════
+       ACCESSIBILITY / READABILITY
+    ═══════════════════════════════ */
+    html {
+      font-size: 106.25%;          /* ≈17px base — easier to read */
+      scroll-behavior: smooth;
+      scroll-padding-top: 92px;    /* keep anchored sections clear of sticky header */
+    }
+    html[data-text="lg"] { font-size: 118.75%; }   /* ≈19px */
+    html[data-text="xl"] { font-size: 131.25%; }   /* ≈21px */
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 12px;
+      top: -64px;
+      background: var(--accent);
+      color: #fff;
+      padding: 11px 20px;
+      border-radius: 0 0 8px 8px;
+      font-weight: 600;
+      z-index: 300;
+      transition: top 0.15s ease;
+    }
+    .skip-link:focus { top: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ═══════════════════════════════
+       HEADER
+    ═══════════════════════════════ */
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 14px 32px;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--navy);
+      color: white;
+      padding: 10px 18px 10px 14px;
+      border-radius: 50px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-text-main {
+      font-family: var(--font-d);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.04em;
+    }
+    .logo-text-sub {
+      font-size: 0.64rem;
+      opacity: 0.65;
+      letter-spacing: 0.04em;
+      margin-top: 3px;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex: 1;
+    }
+    .header-nav a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--fg);
+      opacity: 0.75;
+      transition: opacity 0.12s;
+      white-space: nowrap;
+    }
+    .header-nav a:hover { opacity: 1; }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 50px;
+      white-space: nowrap;
+      transition: background 0.12s;
+      flex-shrink: 0;
+    }
+    .header-cta:hover { background: var(--accent-dark); }
+
+    /* Utility bar — text-size control */
+    .util-bar {
+      background: var(--warm-deep);
+      border-bottom: 1px solid var(--border);
+    }
+    .util-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 7px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .util-label { font-weight: 600; letter-spacing: 0.02em; }
+    .text-size-btns { display: inline-flex; gap: 5px; }
+    .ts-btn {
+      font-family: var(--font-b);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 4px 12px;
+      line-height: 1;
+      font-weight: 700;
+    }
+    .ts-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .ts-btn[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .ts-btn.ts-1 { font-size: 0.82rem; }
+    .ts-btn.ts-2 { font-size: 0.96rem; }
+    .ts-btn.ts-3 { font-size: 1.12rem; }
+
+    /* Mobile nav toggle (hidden on desktop) */
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-toggle svg { display: block; }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 62vh;
+      min-height: 360px;
+      background: #1A3045;
+      overflow: hidden;
+    }
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,45,69,0.18) 0%,
+        rgba(8,45,69,0.35) 60%,
+        rgba(8,45,69,0.72) 100%
+      );
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 52px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 12px;
+    }
+    .hero-heading {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .hero-tagline {
+      font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+      opacity: 0.82;
+      margin-top: 10px;
+      font-weight: 300;
+    }
+
+    /* ═══════════════════════════════
+       SERVICE PANEL (dark, lifted)
+    ═══════════════════════════════ */
+    .service-panel {
+      background: var(--navy);
+      color: white;
+      padding: 56px 0;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0 56px;
+      align-items: start;
+    }
+    .service-divider {
+      background: rgba(255,255,255,0.1);
+      align-self: stretch;
+    }
+    .service-col-label {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .service-col-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 600;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .service-table { width: 100%; border-collapse: collapse; }
+    .service-table td {
+      padding: 10px 0;
+      font-size: 0.92rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.82);
+    }
+    .service-table tr:last-child td { border-bottom: none; }
+    .service-table td:last-child { text-align: right; }
+    .service-table tr.highlight-row td {
+      color: white;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .service-table tr.day-label td {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      padding-top: 20px;
+      border-bottom: none;
+    }
+    .service-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 4px;
+      transition: all 0.12s;
+      text-decoration: none;
+    }
+    .service-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+
+    /* ═══════════════════════════════
+       MINISTRY CARDS (3-col)
+    ═══════════════════════════════ */
+    .ministry-section {
+      padding: 80px 0;
+      background: var(--bg);
+    }
+    .section-header {
+      margin-bottom: 48px;
+    }
+    .section-eyebrow {
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-heading {
+      font-family: var(--font-d);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.2;
+    }
+    .section-intro {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 54ch;
+      margin-top: 8px;
+    }
+    .ministry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .ministry-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.14s, transform 0.14s;
+    }
+    .ministry-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .ministry-img {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: var(--warm-deep);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ministry-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .ministry-card:hover .ministry-img img { transform: scale(1.05); }
+    .ministry-img-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: 100%;
+      color: var(--muted);
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+    .ministry-body {
+      padding: 28px 28px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .ministry-label {
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 9px;
+    }
+    .ministry-title {
+      font-family: var(--font-d);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .ministry-text {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 22px;
+    }
+    .ministry-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 600;
+      border: 1.5px solid var(--accent);
+      padding: 9px 18px;
+      border-radius: var(--r);
+      align-self: flex-start;
+      transition: all 0.12s;
+    }
+    .ministry-link:hover { background: var(--accent); color: white; }
+
+    /* ═══════════════════════════════
+       BASAAR GALLERY
+    ═══════════════════════════════ */
+    .gallery-section {
+      background: var(--warm);
+      padding: 80px 0;
+      border-top: 1px solid var(--warm-deep);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 10px;
+    }
+    .gallery-cell {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--r);
+      overflow: hidden;
+      background: var(--warm-deep);
+    }
+    .gallery-cell.wide {
+      grid-column: span 2;
+      aspect-ratio: 2/1;
+    }
+    .gallery-cell img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .gallery-cell:hover img { transform: scale(1.04); }
+    .gallery-cell-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(8,45,69,0.65));
+      color: white;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 28px 10px 8px;
+      z-index: 2;
+    }
+
+    /* ═══════════════════════════════
+       CONTACT SECTION
+    ═══════════════════════════════ */
+    .contact-section {
+      background: var(--surface);
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .contact-detail-list { list-style: none; margin-top: 28px; }
+    .contact-detail-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.93rem;
+    }
+    .contact-detail-list li:last-child { border-bottom: none; }
+    .cd-icon { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+    .cd-label {
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .contact-detail-list a { color: var(--accent); }
+    .contact-detail-list a:hover { text-decoration: underline; }
+
+    .map-card {
+      background: var(--navy);
+      border-radius: var(--r-lg);
+      padding: 40px;
+      color: white;
+    }
+    .map-card-heading {
+      font-family: var(--font-d);
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .map-card-address {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .map-hours-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 20px;
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 28px;
+    }
+    .map-hours-grid .day { color: rgba(255,255,255,0.45); font-size: 0.72rem; letter-spacing: 0.04em; }
+    .map-hours-grid .time { color: rgba(255,255,255,0.85); font-weight: 500; }
+    .map-hours-grid .featured { color: white; font-weight: 700; font-size: 0.95rem; }
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--r);
+      transition: background 0.12s;
+    }
+    .map-btn:hover { background: #0090d8; }
+
+    /* ═══════════════════════════════
+       FRUIT OF THE SPIRIT (full section)
+    ═══════════════════════════════ */
+    .fruit-section {
+      background: var(--navy);
+      color: white;
+      padding: 80px 0;
+    }
+    .fruit-quote-block {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      line-height: 1.8;
+      text-align: center;
+      max-width: 62ch;
+      margin: 0 auto 48px;
+      opacity: 0.9;
+    }
+    .fruit-quote-block cite {
+      font-style: normal;
+      font-family: var(--font-b);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      display: block;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .fruit-grid-full {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .fruit-tile {
+      position: relative;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--r-lg);
+      padding: 28px 18px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+    }
+    .fruit-tile:hover {
+      background: rgba(0,124,186,0.14);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    .fruit-tile-num {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      font-family: var(--font-d);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.3);
+      line-height: 1;
+    }
+    .fruit-tile-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,124,186,0.16);
+      color: var(--accent);
+      transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+    }
+    .fruit-tile:hover .fruit-tile-icon {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.06);
+    }
+    .fruit-tile-icon svg { width: 29px; height: 29px; display: block; }
+    .fruit-tile-name {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #fff;
+    }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      background: #060F18;
+      color: rgba(255,255,255,0.45);
+      padding: 36px 32px;
+    }
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: var(--font-d);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      font-size: 0.78rem;
+    }
+    .footer-links a { color: rgba(255,255,255,0.45); transition: color 0.12s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.85); }
+
+    /* ═══════════════════════════════
+       YOUTUBE SECTION
+    ═══════════════════════════════ */
+    .yt-section {
+      background: var(--surface);
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+    .yt-full-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .yt-card-full {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+    .yt-card-full:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .yt-card-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: var(--navy);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yt-card-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .yt-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(8,45,69,0.55) 100%);
+    }
+    .yt-card-year-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      z-index: 3;
+    }
+    .yt-card-body {
+      padding: 22px 24px 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .yt-card-label {
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .yt-card-title {
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .yt-card-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .yt-watch-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      background: #FF0000;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 10px 18px 10px 14px;
+      border-radius: var(--r);
+      align-self: flex-start;
+      transition: background 0.12s;
+    }
+    .yt-watch-link:hover { background: #cc0000; }
+    .yt-logo-icon { flex-shrink: 0; }
+
+    /* ═══════════════════════════════
+       AANKONDIGINGS (announcements)
+    ═══════════════════════════════ */
+    .ann-section {
+      background: var(--bg);
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+    .ann-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .ann-chip {
+      font-family: var(--font-b);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--fg);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .ann-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .ann-chip[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .ann-pinned-wrap { display: flex; flex-direction: column; gap: 16px; }
+    .ann-pinned-wrap:not(:empty) { margin-bottom: 24px; }
+    .ann-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .ann-card {
+      display: flex;
+      gap: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 22px 26px;
+      transition: box-shadow 0.14s ease, transform 0.14s ease;
+    }
+    .ann-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+    .ann-date {
+      flex-shrink: 0;
+      width: 66px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      padding-right: 20px;
+    }
+    .ann-date .d { font-family: var(--font-d); font-size: 1.85rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .ann-date .m { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+    .ann-date .y { font-size: 0.72rem; color: var(--muted); opacity: 0.7; margin-top: 2px; }
+
+    .ann-body { flex: 1; min-width: 0; }
+    .ann-tag, .ann-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 4px 10px;
+      margin-bottom: 10px;
+      vertical-align: middle;
+    }
+    .ann-tag { color: var(--accent); background: rgba(0,124,186,0.1); }
+    .ann-badge { color: #fff; background: var(--accent); margin-right: 7px; }
+    .ann-title { font-family: var(--font-d); font-size: 1.28rem; font-weight: 600; color: var(--fg); line-height: 1.3; margin-bottom: 7px; }
+    .ann-text { color: var(--muted); font-size: 1rem; line-height: 1.65; }
+    .ann-more {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--accent); font-weight: 600; font-size: 0.95rem; margin-top: 12px;
+    }
+    .ann-more:hover { text-decoration: underline; }
+
+    .ann-card.pinned {
+      border: 1.5px solid var(--accent);
+      box-shadow: 0 3px 22px rgba(0,124,186,0.14);
+    }
+    .ann-card.pinned .ann-date { border-right-color: rgba(0,124,186,0.35); }
+
+    .ann-empty { color: var(--muted); font-style: italic; padding: 22px 4px; }
+
+    /* archive (collapsible) */
+    .ann-archive { margin-top: 36px; border-top: 1px solid var(--border); }
+    .ann-archive > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 20px 4px;
+      font-family: var(--font-d);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--fg);
+    }
+    .ann-archive > summary::-webkit-details-marker { display: none; }
+    .ann-archive > summary .chev { transition: transform 0.2s ease; color: var(--accent); flex-shrink: 0; }
+    .ann-archive[open] > summary .chev { transform: rotate(90deg); }
+    .ann-archive .arch-count { color: var(--muted); font-weight: 400; font-size: 0.98rem; }
+    .arch-month { margin: 10px 0 6px; }
+    .arch-month-label {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); padding: 10px 0 8px; border-bottom: 1px solid var(--border);
+    }
+    .arch-row {
+      display: flex; align-items: baseline; gap: 16px;
+      padding: 14px 6px; border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+    }
+    .arch-row:hover { background: var(--surface); }
+    .arch-row .arch-date { flex-shrink: 0; width: 116px; font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+    .arch-row .arch-tag { flex-shrink: 0; width: 96px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+    .arch-row .arch-title { font-size: 1rem; color: var(--fg); }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 960px) {
+      .ministry-grid { grid-template-columns: 1fr; max-width: 520px; }
+      .service-grid { grid-template-columns: 1fr; gap: 40px; }
+      .service-divider { display: none; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-cell.wide { grid-column: span 2; aspect-ratio: 2/1; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .fruit-grid-full { grid-template-columns: repeat(3, 1fr); }
+      .yt-full-grid { grid-template-columns: 1fr; max-width: 520px; }
+    }
+    @media (max-width: 640px) {
+      .header-inner { padding: 12px 16px; gap: 12px; }
+      .util-inner { justify-content: center; padding: 7px 16px; }
+      .nav-toggle { display: inline-flex; }
+      .header-cta { display: none; }
+      .header-nav {
+        display: none;
+        flex: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 6px 0;
+      }
+      .header-nav.open { display: flex; }
+      .header-nav a {
+        padding: 15px 22px;
+        font-size: 1.1rem;
+        opacity: 0.95;
+        border-bottom: 1px solid var(--border);
+      }
+      .header-nav a:last-child { border-bottom: none; }
+      .hero { height: 52vh; }
+      .ann-card { gap: 16px; padding: 18px 18px; }
+      .ann-date { width: 54px; padding-right: 14px; }
+      .ann-date .d { font-size: 1.5rem; }
+      .arch-row { flex-wrap: wrap; gap: 4px 12px; }
+      .arch-row .arch-tag { display: none; }
+      .arch-row .arch-date { width: auto; }
+      .ministry-grid { max-width: none; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-cell.wide { grid-column: span 1; aspect-ratio: 1; }
+      .fruit-grid-full { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .fruit-tile { padding: 18px 8px 16px; gap: 10px; }
+      .fruit-tile-icon { width: 46px; height: 46px; }
+      .fruit-tile-icon svg { width: 24px; height: 24px; }
+      .fruit-tile-name { font-size: 0.9rem; }
+      .container { padding: 0 18px; }
+      .service-panel { padding: 40px 0; }
+      .map-card { padding: 28px; }
+      .yt-full-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#aankondigings">Gaan na aankondigings</a>
+
+<!-- ══════════ UTILITY BAR ══════════ -->
+<div class="util-bar">
+  <div class="util-inner">
+    <span class="util-label">Teksgrootte</span>
+    <div class="text-size-btns" role="group" aria-label="Verstel teksgrootte">
+      <button type="button" class="ts-btn ts-1" data-size="" aria-pressed="true" title="Normale teks">A</button>
+      <button type="button" class="ts-btn ts-2" data-size="lg" aria-pressed="false" title="Groter teks">A+</button>
+      <button type="button" class="ts-btn ts-3" data-size="xl" aria-pressed="false" title="Grootste teks">A++</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="site-header">
+  <div class="header-inner">
+
+    <a href="#" class="logo-badge">
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8.5" y="1" width="3" height="18" rx="1.2" fill="white"/>
+          <rect x="2" y="7" width="16" height="3" rx="1.2" fill="white"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-text-main">NG HORISON</div>
+        <div class="logo-text-sub">Horison · Roodepoort</div>
+      </div>
+    </a>
+
+    <nav class="header-nav" id="hoofnav">
+      <a href="#aankondigings">Aankondigings</a>
+      <a href="#dienste">Dienste</a>
+      <a href="#gemeenskap">Gemeenskap</a>
+      <a href="#youtube">Prediking</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+
+    <a href="mailto:ngk.horison@gmail.com" class="header-cta">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+      Kontak ons
+    </a>
+
+    <button type="button" class="nav-toggle" aria-label="Maak kieslys oop" aria-controls="hoofnav" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
+
+  </div>
+</header>
+
+<!-- ══════════ HERO ══════════ -->
+<div class="hero">
+  <img src="mqtqlgf3-MainImage.jpeg" alt="NG Gemeente Horison kerkgebou" onerror="this.style.display='none'">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="hero-eyebrow">Welkom by NG Gemeente Horison</div>
+    <h1 class="hero-heading">NG Horison</h1>
+    <p class="hero-tagline">Sondag 09:00 · Horison, Roodepoort</p>
+  </div>
+</div>
+
+<!-- ══════════ SERVICE PANEL ══════════ -->
+<div class="service-panel" id="dienste">
+  <div class="container">
+    <div class="service-grid">
+
+      <div>
+        <div class="service-col-label">Eredienstye</div>
+        <h2 class="service-col-title">Sondagoggenddiens</h2>
+        <table class="service-table">
+          <tr class="highlight-row">
+            <td>Sondag</td>
+            <td>09:00</td>
+          </tr>
+        </table>
+        <a href="https://www.google.com/maps/search/?api=1&query=-26.150596,27.877858" target="_blank" rel="noopener" class="service-btn">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+          Padaanwysings
+        </a>
+      </div>
+
+      <div class="service-divider"></div>
+
+      <div>
+        <div class="service-col-label">Kantoorure</div>
+        <h2 class="service-col-title">Ons is hier</h2>
+        <table class="service-table">
+          <tr class="day-label"><td colspan="2">Weeksdae</td></tr>
+          <tr><td>Maandag</td><td>Gesluit</td></tr>
+          <tr><td>Dinsdag</td><td>08:00 – 13:00</td></tr>
+          <tr><td>Woensdag</td><td>08:00 – 13:00</td></tr>
+          <tr><td>Donderdag</td><td>08:00 – 13:00</td></tr>
+          <tr><td>Vrydag</td><td>08:00 – 13:00</td></tr>
+          <tr><td>Saterdag</td><td>Gesluit</td></tr>
+        </table>
+        <a href="tel:0728362209" class="service-btn">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          Skakel ons
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ AANKONDIGINGS ══════════ -->
+<section class="ann-section" id="aankondigings">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Bly op hoogte</div>
+      <h2 class="section-heading">Aankondigings</h2>
+      <p class="section-intro">Weeklikse nuus en aankondigings van die gemeente. Die nuutste verskyn eerste — ouer aankondigings is netjies in die argief hieronder.</p>
+    </div>
+
+    <div class="ann-toolbar" id="ann-filters" role="group" aria-label="Filter aankondigings volgens kategorie"></div>
+
+    <div class="ann-pinned-wrap" id="ann-pinned"></div>
+    <div class="ann-list" id="ann-recent"></div>
+
+    <details class="ann-archive" id="ann-archive">
+      <summary>
+        <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,3 11,8 5,13"/></svg>
+        Vorige aankondigings
+        <span class="arch-count" id="ann-arch-count"></span>
+      </summary>
+      <div id="ann-archive-body"></div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ MINISTRY CARDS ══════════ -->
+<section class="ministry-section" id="gemeenskap">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Ons gemeentelike lewe</div>
+      <h2 class="section-heading">Wat ons glo &amp; doen</h2>
+      <p class="section-intro">NG Gemeente Horison is 'n lewende gemeenskap gegrond op die Woord en die Gees.</p>
+    </div>
+
+    <div class="ministry-grid">
+
+      <!-- Card 1: Omgee & Uitreik -->
+      <div class="ministry-card">
+        <div class="ministry-img">
+          <img src="assets/images/gallery-basaar-2025-13.jpg" alt="Gemeentelede kuier saam by die koffietafel" onerror="this.style.display='none'">
+        </div>
+        <div class="ministry-body">
+          <div class="ministry-label">Diens &amp; barmhartigheid</div>
+          <h3 class="ministry-title">Omgee &amp; Uitreik</h3>
+          <p class="ministry-text">Ons sien na mekaar om en reik uit na ons gemeenskap — deur pastorale sorg, gebed en praktiese hulp aan elkeen wat dit nodig het.</p>
+          <a href="#kontak" class="ministry-link">
+            Raak betrokke
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Geloofsbelydenis / Solas -->
+      <div class="ministry-card">
+        <div class="ministry-img">
+          <img src="assets/images/church-service.jpg" alt="Gebrandskilderde venster met kruis en duif" onerror="this.style.display='none'">
+        </div>
+        <div class="ministry-body">
+          <div class="ministry-label">Reformatoriese grondslag</div>
+          <h3 class="ministry-title">Ons Geloofsbelydenis</h3>
+          <p class="ministry-text">Ons staan op die erfenis van die Reformasie — Genade alleen, Christus alleen, Geloof alleen, die Skrif alleen, en aan God alleen die eer.</p>
+          <a href="#dienste" class="ministry-link">
+            Sluit Sondag by ons aan
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Saam Groei -->
+      <div class="ministry-card">
+        <div class="ministry-img">
+          <img src="assets/images/church-building-2.jpg" alt="Die kerk se binneste met kerkbanke en orrel" onerror="this.style.display='none'">
+        </div>
+        <div class="ministry-body">
+          <div class="ministry-label">Toerusting &amp; groei</div>
+          <h3 class="ministry-title">Saam Groei</h3>
+          <p class="ministry-text">Van katkisasie tot Bybelstudie en jeugbyeenkomste — ons groei saam in geloof, elke ouderdom en elke week van die jaar.</p>
+          <a href="#aankondigings" class="ministry-link">
+            Sien ons program
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FRUIT OF THE SPIRIT (full section) ══════════ -->
+<section class="fruit-section" id="geloof">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:40px;">
+      <div class="section-eyebrow" style="color:var(--accent);">Galasiërs 5:22</div>
+      <h2 class="section-heading" style="color:white; margin-top:6px;">Die Nege Vrugte</h2>
+    </div>
+    <blockquote class="fruit-quote-block">
+      "Een van die duidelikste bewyse dat ek werklik 'n Christen is, is dat die vrug van Christus se Gees in my lewe is. Vroom woorde en getuienisse is mooi maar dit tel min as hierdie innerlike gesindhede en praktiese eienskappe nie bykom nie."
+      <cite>— Galasiërs 5:22</cite>
+    </blockquote>
+    <div class="fruit-grid-full">
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">1</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+        <span class="fruit-tile-name">Liefde</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">2</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="fruit-tile-name">Vreugde</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">3</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/></svg></span>
+        <span class="fruit-tile-name">Vrede</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">4</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg></span>
+        <span class="fruit-tile-name">Geduld</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">5</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="fruit-tile-name">Vriendelikheid</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">6</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
+        <span class="fruit-tile-name">Goedhartigheid</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">7</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg></span>
+        <span class="fruit-tile-name">Getrouheid</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">8</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg></span>
+        <span class="fruit-tile-name">Nederigheid</span>
+      </div>
+      <div class="fruit-tile">
+        <span class="fruit-tile-num">9</span>
+        <span class="fruit-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></span>
+        <span class="fruit-tile-name">Selfbeheersing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ BASAAR GALLERY ══════════ -->
+<section class="gallery-section" id="basaar">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Gemeenteaktiwiteite</div>
+      <h2 class="section-heading">Basaar &amp; Gemeenskap</h2>
+      <p class="section-intro">Die jaarlikse kerkbasaar is ons gelukkigste samekoms — braai, pannekoek, kerrie en rys, kuns en kuier.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-cell wide">
+        <div class="gallery-cell-placeholder">Foto — Braai</div>
+        <img src="assets/images/gallery-basaar-2025-01.jpg" alt="Braai" onerror="this.style.display='none'">
+        <div class="gallery-caption">Braai</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="gallery-cell-placeholder">Foto — Vriende</div>
+        <img src="assets/images/gallery-basaar-2025-04.jpg" alt="Vriende" onerror="this.style.display='none'">
+        <div class="gallery-caption">Vriende</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="gallery-cell-placeholder">Foto — Kuns</div>
+        <img src="assets/images/gallery-basaar-2025-15.jpg" alt="Kuns" onerror="this.style.display='none'">
+        <div class="gallery-caption">Kuns</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="gallery-cell-placeholder">Foto — Pannekoek</div>
+        <img src="assets/images/gallery-basaar-2025-10.jpg" alt="Pannekoek" onerror="this.style.display='none'">
+        <div class="gallery-caption">Pannekoek</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="gallery-cell-placeholder">Foto — Kerrie en rys</div>
+        <img src="assets/images/gallery-basaar-2025-08.jpg" alt="Kerrie en rys" onerror="this.style.display='none'">
+        <div class="gallery-caption">Kerrie en rys</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="gallery-cell-placeholder">Foto — Kuier</div>
+        <img src="assets/images/gallery-basaar-2025-09.jpg" alt="Kuier" onerror="this.style.display='none'">
+        <div class="gallery-caption">Kuier</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ YOUTUBE PREDIKING ══════════ -->
+<section class="yt-section" id="youtube">
+  <div class="container">
+    <div class="section-header">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+        <div class="section-eyebrow" style="margin-bottom:0;">Woordbediening</div>
+        <span style="display:inline-flex; align-items:center; gap:6px; background:#FF0000; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 10px 3px 7px; border-radius:20px;">
+          <svg width="18" height="13" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z" opacity="0.3"/><path fill="white" d="M36 45L59.4 31.5 36 18V45z"/></svg>
+          Beskikbaar op YouTube
+        </span>
+      </div>
+      <h2 class="section-heading">Prediking Opnames</h2>
+      <p class="section-intro">Mis 'n Sondag? Al ons prediking is gratis beskikbaar op YouTube — kyk wanneer dit vir jou pas.</p>
+    </div>
+    <div class="yt-full-grid">
+
+      <a class="yt-card-full" href="https://www.youtube.com/watch?v=mvKd7wGoHg4&list=PL50qQAXFtkoaBs1HYE9wM_Jz4CBy2TR5k" target="_blank" rel="noopener">
+        <div class="yt-card-thumb">
+          <div class="yt-card-overlay"></div>
+          <span class="yt-card-year-badge">2024</span>
+          <img src="assets/images/img-youtube-2024.png" alt="2024 Prediking" onerror="this.style.display='none'">        </div>
+        <div class="yt-card-body">
+          <div class="yt-card-label">2024 Reeks</div>
+          <div class="yt-card-title">Prediking Opnames 2024</div>
+          <div class="yt-card-desc">Die volledige 2024 preekspellys — luister na die Blye Boodskap soos verkondig in NG Horison.</div>
+          <span class="yt-watch-link">
+            <svg class="yt-logo-icon" width="32" height="22" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="63" rx="14" fill="white"/>
+              <path fill="#FF0000" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z"/>
+              <path fill="white" d="M36 45L59.4 31.5 36 18V45z"/>
+            </svg>
+            Kyk op YouTube
+          </span>
+        </div>
+      </a>
+
+      <a class="yt-card-full" href="https://www.youtube.com/playlist?list=PL50qQAXFtkobdNqDaTU1ce95WEuHRW1M8" target="_blank" rel="noopener">
+        <div class="yt-card-thumb">
+          <div class="yt-card-overlay"></div>
+          <span class="yt-card-year-badge">2025</span>
+          <img src="assets/images/img-youtube-2025.png" alt="2025 Prediking" onerror="this.style.display='none'">        </div>
+        <div class="yt-card-body">
+          <div class="yt-card-label">2025 Reeks</div>
+          <div class="yt-card-title">Prediking Opnames 2025</div>
+          <div class="yt-card-desc">Die volledige 2025 preekspellys — elke boodskap beskikbaar om te herbeluister of te deel.</div>
+          <span class="yt-watch-link">
+            <svg class="yt-logo-icon" width="32" height="22" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="63" rx="14" fill="white"/>
+              <path fill="#FF0000" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z"/>
+              <path fill="white" d="M36 45L59.4 31.5 36 18V45z"/>
+            </svg>
+            Kyk op YouTube
+          </span>
+        </div>
+      </a>
+
+      <a class="yt-card-full" href="https://www.youtube.com/playlist?list=PL50qQAXFtkobaITZ6Xe-FGUTrkjhjP8sH" target="_blank" rel="noopener">
+        <div class="yt-card-thumb">
+          <div class="yt-card-overlay"></div>
+          <span class="yt-card-year-badge">2026</span>
+          <img src="assets/images/img-youtube-2026.png" alt="2026 Prediking" onerror="this.style.display='none'">        </div>
+        <div class="yt-card-body">
+          <div class="yt-card-label">2026 Reeks</div>
+          <div class="yt-card-title">Prediking Opnames 2026</div>
+          <div class="yt-card-desc">Die nuutste 2026 reeks — volg ons lopende prediking reg deur die jaar.</div>
+          <span class="yt-watch-link">
+            <svg class="yt-logo-icon" width="32" height="22" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="63" rx="14" fill="white"/>
+              <path fill="#FF0000" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z"/>
+              <path fill="white" d="M36 45L59.4 31.5 36 18V45z"/>
+            </svg>
+            Kyk op YouTube
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section class="contact-section" id="kontak">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div>
+        <div class="section-eyebrow">Kontak</div>
+        <h2 class="section-heading">Kom Besoek ons</h2>
+        <p class="section-intro">Almal is van harte welkom — of jy nuut is of 'n ou vriend.</p>
+        <ul class="contact-detail-list">
+          <li>
+            <svg class="cd-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+            <div>
+              <span class="cd-label">Adres</span>
+              Andries Bruynstraat &amp; Moutonstraat, Horison, Roodepoort
+            </div>
+          </li>
+          <li>
+            <svg class="cd-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+            <div>
+              <span class="cd-label">Telefoon</span>
+              <a href="tel:0728362209">072 836 2209</a><br>
+              <a href="tel:0117602623">011 760 2623</a>
+            </div>
+          </li>
+          <li>
+            <svg class="cd-icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+            <div>
+              <span class="cd-label">E-pos</span>
+              <a href="mailto:ngk.horison@gmail.com">ngk.horison@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="map-card">
+        <div class="map-card-heading">Erediens &amp; Kantoorure</div>
+        <div class="map-card-address">
+          Andries Bruynstraat &amp; Moutonstraat<br>
+          Horison, Roodepoort
+        </div>
+        <div class="map-hours-grid">
+          <span class="day">Sondag</span>
+          <span class="time featured">Erediens 09:00</span>
+          <span class="day">Di–Vr</span>
+          <span class="time">Kantoor 08:00 – 13:00</span>
+          <span class="day">Ma / Sa</span>
+          <span class="time">Gesluit</span>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-26.150596,27.877858" target="_blank" rel="noopener" class="map-btn">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+          Wys op Google Maps
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">NG Gemeente Horison</div>
+    <div class="footer-links">
+      <a href="mailto:ngk.horison@gmail.com">ngk.horison@gmail.com</a>
+      <a href="tel:0728362209">072 836 2209</a>
+      <a href="https://nghorison.org/" target="_blank" rel="noopener">nghorison.org</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ─────────────────────────────────────────────
+     TEKSGROOTTE  (text-size control, remembered)
+  ───────────────────────────────────────────── */
+  var root = document.documentElement;
+  try {
+    var saved = localStorage.getItem('ng-text');
+    if (saved) root.setAttribute('data-text', saved);
+  } catch (e) {}
+  var tsBtns = document.querySelectorAll('.ts-btn');
+  function syncTs() {
+    var cur = root.getAttribute('data-text') || '';
+    tsBtns.forEach(function (b) {
+      b.setAttribute('aria-pressed', (b.getAttribute('data-size') || '') === cur ? 'true' : 'false');
+    });
+  }
+  tsBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-size') || '';
+      if (v) root.setAttribute('data-text', v); else root.removeAttribute('data-text');
+      try { localStorage.setItem('ng-text', v); } catch (e) {}
+      syncTs();
+    });
+  });
+  syncTs();
+
+  /* ─────────────────────────────────────────────
+     SELFOON-KIESLYS  (mobile menu)
+  ───────────────────────────────────────────── */
+  var toggle = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('hoofnav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Maak kieslys toe' : 'Maak kieslys oop');
+    });
+    nav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Maak kieslys oop');
+      });
+    });
+  }
+
+  /* ─────────────────────────────────────────────
+     AANKONDIGINGS
+     ↓↓↓  DATA — vervang later met WordPress  ↓↓↓
+     Voeg elke week 'n nuwe inskrywing bo-aan by.
+     Velde:  date 'JJJJ-MM-DD' · category · title · body
+             pinned: true  hou dit bo (gemerk "Belangrik")
+             link (opsioneel): '#anker', 'mailto:' of 'https://'
+  ───────────────────────────────────────────── */
+  var DATA = [
+    { date: '2026-06-25', category: 'Pastoraal', pinned: true,
+      title: 'Meelewing met die Van Zyl-familie',
+      body: 'Ons innige meegevoel met die Van Zyl-familie met die afsterwe van oom Hendrik. Die roudiens vind Vrydag 27 Junie om 10:00 in die kerk plaas. Ons dra die familie in ons gebede.' },
+    { date: '2026-06-21', category: 'Erediens',
+      title: 'Nagmaal hierdie Sondag',
+      body: 'Ons vier die heilige nagmaal saam tydens die oggenddiens om 09:00. Almal wat die Here Jesus bely, is hartlik welkom by die tafel.' },
+    { date: '2026-06-18', category: 'Jeug',
+      title: 'Jeugkamp 2026 — inskrywings is oop',
+      body: 'Die jaarlikse jeugkamp vind van 18–20 Julie plaas. Inskrywingsvorms is by die kerkkantoor beskikbaar. Plekke is beperk, skryf gou in!',
+      link: 'mailto:ngk.horison@gmail.com' },
+    { date: '2026-06-14', category: 'Basaar',
+      title: 'Basaarkomitee vergader',
+      body: 'Die beplanning vir die 2026-kerkbasaar is in volle swang. Vrywilligers word benodig — kontak die kantoor as jy wil help.' },
+    { date: '2026-06-08', category: 'Bybelstudie',
+      title: 'Weeklikse Bybelstudie hervat',
+      body: 'Ons Woensdagaand-Bybelstudie hervat om 18:30 in die kerksaal. Hierdie kwartaal bestudeer ons die Brief aan die Filippense.' },
+    { date: '2026-06-01', category: 'Algemeen',
+      title: 'Dankie vir die kospakkies',
+      body: 'Baie dankie aan almal wat bygedra het tot die kospakkie-projek. Saam maak ons ’n verskil in ons gemeenskap.' },
+    { date: '2026-05-25', category: 'Erediens',
+      title: 'Pinksterreeks: “Lewe in die Gees”',
+      body: 'Sluit aan by ons spesiale Pinksterdienste van 25–31 Mei, elke aand om 18:00. Tema: die werk van die Heilige Gees in die gelowige se lewe.' },
+    { date: '2026-05-17', category: 'Jeug',
+      title: 'Belydenisaflegging',
+      body: 'Ons is dankbaar vir agt jongmense wat hul geloof bely het. Mag die Here hulle op hul pad lei en sterk maak.' },
+    { date: '2026-05-04', category: 'Pastoraal',
+      title: 'Hospitaal- en tuisbesoeke',
+      body: 'Indien u of ’n geliefde ’n besoek van die predikant verlang, laat weet asseblief die kerkkantoor. Ons sien graag na mekaar om.' },
+    { date: '2026-04-20', category: 'Basaar',
+      title: 'Terugvoer: Herfsmark was ’n sukses',
+      body: 'Dankie aan almal wat die Herfsmark ondersteun het. Die opbrengs gaan na die instandhouding van die kerkgebou.' },
+    { date: '2026-04-06', category: 'Erediens',
+      title: 'Paasnaweek-dienste',
+      body: 'Goeie Vrydag-diens om 09:00 en Paassondag se feesdiens om 09:00. Kom vier saam die opstanding van ons Here.' },
+    { date: '2026-03-15', category: 'Algemeen',
+      title: 'Gemeente-adreslys word bygewerk',
+      body: 'Ons werk die gemeente se kontakbesonderhede by. Voltooi asseblief die vorm by die kantoor sodat ons u kan bereik.' },
+    { date: '2026-02-23', category: 'Bybelstudie',
+      title: 'Vroue-Bybelstudie begin',
+      body: '’n Nuwe vroue-Bybelstudie begin Dinsdae om 09:30. Almal welkom — bring gerus ’n vriendin saam.' },
+    { date: '2026-02-01', category: 'Jeug',
+      title: 'Katkisasie hervat',
+      body: 'Katkisasieklasse vir 2026 begin Sondag ná die erediens. Ouers, registreer asseblief u kinders by die kantoor.' },
+    { date: '2026-01-19', category: 'Algemeen',
+      title: 'Program vir die nuwe jaar',
+      body: 'Welkom terug! Die volledige jaarprogram met al ons dienste, Bybelstudies en gemeente-aktiwiteite is nou by die kantoor beskikbaar.' }
+  ];
+
+  var MND      = ['Januarie','Februarie','Maart','April','Mei','Junie','Julie','Augustus','September','Oktober','November','Desember'];
+  var MND_KORT = ['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Des'];
+  var CAT_ORDER = ['Erediens','Pastoraal','Basaar','Jeug','Bybelstudie','Algemeen'];
+  var RECENT_COUNT = 5;
+
+  function parts(d) { var p = d.split('-'); return { d: parseInt(p[2],10), mi: parseInt(p[1],10)-1, y: parseInt(p[0],10) }; }
+  function longDate(d) { var p = parts(d); return p.d + ' ' + MND[p.mi] + ' ' + p.y; }
+
+  var pinnedEl  = document.getElementById('ann-pinned');
+  var recentEl  = document.getElementById('ann-recent');
+  var archiveEl = document.getElementById('ann-archive');
+  var archBody  = document.getElementById('ann-archive-body');
+  var archCount = document.getElementById('ann-arch-count');
+  var filtersEl = document.getElementById('ann-filters');
+  var current   = 'Alles';
+
+  function cardHTML(a, pinned) {
+    var p = parts(a.date);
+    var badge = pinned ? '<span class="ann-badge">★ Belangrik</span>' : '';
+    var more = '';
+    if (a.link) {
+      var ext = a.link.charAt(0) !== '#';
+      more = '<a class="ann-more" href="' + a.link + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>Lees meer →</a>';
+    }
+    return '<article class="ann-card' + (pinned ? ' pinned' : '') + '">' +
+      '<div class="ann-date"><div class="d">' + p.d + '</div><div class="m">' + MND_KORT[p.mi] + '</div><div class="y">' + p.y + '</div></div>' +
+      '<div class="ann-body">' + badge + '<span class="ann-tag">' + a.category + '</span>' +
+      '<h3 class="ann-title">' + a.title + '</h3><p class="ann-text">' + a.body + '</p>' + more + '</div>' +
+      '</article>';
+  }
+
+  function render() {
+    var items = DATA.filter(function (a) { return current === 'Alles' || a.category === current; });
+    items.sort(function (a, b) { return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0); });
+
+    var pinned = items.filter(function (a) { return a.pinned; });
+    var rest   = items.filter(function (a) { return !a.pinned; });
+    var recent = rest.slice(0, RECENT_COUNT);
+    var archive = rest.slice(RECENT_COUNT);
+
+    pinnedEl.innerHTML = pinned.map(function (a) { return cardHTML(a, true); }).join('');
+    recentEl.innerHTML = recent.length
+      ? recent.map(function (a) { return cardHTML(a, false); }).join('')
+      : (pinned.length ? '' : '<p class="ann-empty">Geen aankondigings in hierdie kategorie nie.</p>');
+
+    if (archive.length) {
+      var order = [], map = {};
+      archive.forEach(function (a) {
+        var p = parts(a.date), key = p.y + '-' + p.mi;
+        if (!map[key]) { map[key] = { label: MND[p.mi] + ' ' + p.y, items: [] }; order.push(key); }
+        map[key].items.push(a);
+      });
+      archBody.innerHTML = order.map(function (k) {
+        var g = map[k];
+        return '<div class="arch-month"><div class="arch-month-label">' + g.label + '</div>' +
+          g.items.map(function (a) {
+            var href = a.link || '#aankondigings';
+            var ext = a.link && a.link.charAt(0) !== '#';
+            return '<a class="arch-row" href="' + href + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' +
+              '<span class="arch-date">' + longDate(a.date) + '</span>' +
+              '<span class="arch-tag">' + a.category + '</span>' +
+              '<span class="arch-title">' + a.title + '</span></a>';
+          }).join('') + '</div>';
+      }).join('');
+      archCount.textContent = '(' + archive.length + ')';
+      archiveEl.style.display = '';
+    } else {
+      archBody.innerHTML = '';
+      archCount.textContent = '';
+      archiveEl.removeAttribute('open');
+      archiveEl.style.display = 'none';
+    }
+  }
+
+  // build category filter chips (only categories that exist, in preferred order)
+  var present = {};
+  DATA.forEach(function (a) { present[a.category] = true; });
+  var cats = ['Alles'].concat(CAT_ORDER.filter(function (c) { return present[c]; }));
+  filtersEl.innerHTML = cats.map(function (c) {
+    return '<button type="button" class="ann-chip" data-cat="' + c + '" aria-pressed="' + (c === 'Alles' ? 'true' : 'false') + '">' + c + '</button>';
+  }).join('');
+  filtersEl.querySelectorAll('.ann-chip').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      current = btn.getAttribute('data-cat');
+      filtersEl.querySelectorAll('.ann-chip').forEach(function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

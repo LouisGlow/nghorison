@@ -1,0 +1,686 @@
+
+<!doctype html>
+<html lang="af">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NG Gemeente Horison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #FDF8F3;
+      --surface:      #FFFFFF;
+      --fg:           #2C1E13;
+      --muted:        #7A6558;
+      --border:       #E2D5C9;
+      --accent:       #007CBA;
+      --accent-dark:  #006BA1;
+      --warm:         #F5EDE2;
+      --warm-deep:    #EDE0D3;
+      --shadow:       0 2px 16px rgba(44,30,19,0.07);
+      --r:            6px;
+      --r-lg:         12px;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Fira Sans', -apple-system, system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .topbar {
+      background: var(--accent);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 9px 20px;
+    }
+
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+    .header-cross { flex-shrink: 0; width: 44px; height: 44px; opacity: 0.85; }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 21/8;
+      background: var(--warm-deep);
+      overflow: hidden;
+    }
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .section { padding: 72px 0; }
+    .section.warm {
+      background: var(--warm);
+      border-top: 1px solid var(--warm-deep);
+      border-bottom: 1px solid var(--warm-deep);
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .section-intro {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 56ch;
+      margin-bottom: 40px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+    .info-card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--fg);
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .time-table { width: 100%; border-collapse: collapse; }
+    .time-table td {
+      padding: 9px 0;
+      font-size: 0.93rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .time-table tr:last-child td { border-bottom: none; }
+    .time-table td:last-child { text-align: right; color: var(--muted); }
+    .time-table tr.highlight td { color: var(--accent); font-weight: 600; }
+    .time-table .sub-label td {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 18px;
+      border-bottom: none;
+    }
+
+    .contact-list { list-style: none; }
+    .contact-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.93rem;
+    }
+    .contact-list li:last-child { border-bottom: none; }
+    .contact-list .icon { width: 18px; flex-shrink: 0; color: var(--accent); margin-top: 3px; }
+    .contact-label {
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .contact-list a { color: var(--accent); text-decoration: none; }
+    .contact-list a:hover { text-decoration: underline; }
+
+    .fruit-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      line-height: 1.75;
+      color: var(--fg);
+      max-width: 68ch;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+    .fruit-ref {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      display: block;
+      margin-top: 14px;
+    }
+    .fruit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .fruit-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: var(--r);
+      padding: 22px 16px 18px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .fruit-num {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--accent);
+      opacity: 0.35;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .fruit-name { font-weight: 600; font-size: 1rem; color: var(--fg); line-height: 1.3; }
+
+    .solas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .sola-card {
+      background: var(--accent);
+      color: white;
+      border-radius: var(--r-lg);
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .sola-card.mid { background: var(--accent-dark); }
+    .sola-card::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .sola-latin { font-family: var(--font-display); font-style: italic; font-size: 1.35rem; line-height: 1.35; margin-bottom: 14px; }
+    .sola-rule { width: 28px; height: 2px; background: rgba(255,255,255,0.45); margin: 0 auto 14px; }
+    .sola-trans { font-size: 0.83rem; opacity: 0.82; line-height: 1.5; }
+
+    .youtube-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .yt-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+    .yt-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(44,30,19,0.12); }
+    .yt-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #daeaf5;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yt-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .yt-play-icon { color: var(--accent); opacity: 0.5; z-index: 0; }
+    .yt-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: #FF0000;
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 2px 6px;
+      border-radius: 3px;
+      z-index: 2;
+    }
+    .yt-info { padding: 18px 20px 20px; }
+    .yt-year { font-size: 0.67rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+    .yt-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--fg); line-height: 1.3; }
+    .yt-sub { font-size: 0.8rem; color: var(--muted); margin-top: 5px; }
+
+    .basaar-text { color: var(--fg); max-width: 60ch; margin-bottom: 36px; font-size: 0.98rem; }
+    .basaar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .basaar-cell {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--r);
+      overflow: hidden;
+      background: var(--warm-deep);
+    }
+    .basaar-cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .basaar-cell .cell-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .basaar-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(44,30,19,0.62));
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 22px 10px 8px;
+      z-index: 2;
+    }
+
+    .contact-strip { background: var(--surface); border-top: 1px solid var(--border); padding: 60px 0; }
+    .contact-strip .container { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: var(--r);
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 18px;
+      transition: background 0.12s;
+    }
+    .map-btn:hover { background: var(--accent-dark); }
+    .contact-summary {
+      background: var(--warm);
+      border: 1px solid var(--warm-deep);
+      border-radius: var(--r-lg);
+      padding: 32px 36px;
+    }
+    .contact-summary-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; margin-bottom: 16px; color: var(--fg); }
+    .contact-line { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; padding: 6px 0; color: var(--fg); }
+    .contact-line svg { color: var(--accent); flex-shrink: 0; }
+    .contact-line a { color: var(--accent); text-decoration: none; }
+    .contact-line a:hover { text-decoration: underline; }
+
+    footer { background: var(--fg); color: rgba(255,255,255,0.55); text-align: center; padding: 26px 20px; font-size: 0.78rem; }
+    footer strong { color: rgba(255,255,255,0.9); }
+
+    @media (max-width: 900px) {
+      .info-grid { grid-template-columns: 1fr; }
+      .solas-grid { grid-template-columns: 1fr; gap: 14px; }
+      .youtube-grid { grid-template-columns: repeat(2, 1fr); }
+      .basaar-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-strip .container { grid-template-columns: 1fr; gap: 32px; }
+      .hero { aspect-ratio: 16/7; }
+    }
+    @media (max-width: 580px) {
+      .section { padding: 52px 0; }
+      .fruit-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .youtube-grid { grid-template-columns: 1fr; }
+      .basaar-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { aspect-ratio: 4/3; }
+      .brand-name { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    Welkom by NG Gemeente Horison &nbsp;·&nbsp; Sondagoggenddiens 09:00
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <div>
+        <div class="brand-name">NG HORISON</div>
+        <div class="brand-sub">NG Gemeente Horison &nbsp;·&nbsp; Roodepoort</div>
+      </div>
+      <svg class="header-cross" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="18.5" y="4" width="7" height="36" rx="2.5" fill="#007CBA"/>
+        <rect x="6" y="16" width="32" height="7" rx="2.5" fill="#007CBA"/>
+      </svg>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-fallback">Kerkfoto word later bygevoeg</div>
+    <img src="images/hero.jpg" alt="NG Gemeente Horison kerkgebou" onerror="this.style.display='none'">
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-eyebrow">Ons is hier vir jou</div>
+      <h2 class="section-heading">Dienste &amp; Kontak</h2>
+      <p class="section-intro">Kom besoek ons Sondagoggende om 09:00 — almal is van harte welkom.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-card-title">Dienste &amp; Kantoorure</span>
+          <table class="time-table">
+            <tr class="highlight">
+              <td>Sondag — Erediens</td>
+              <td>09:00</td>
+            </tr>
+            <tr class="sub-label"><td colspan="2">Kantoorure</td></tr>
+            <tr><td>Maandag</td><td>Gesluit</td></tr>
+            <tr><td>Dinsdag</td><td>08:00 – 13:00</td></tr>
+            <tr><td>Woensdag</td><td>08:00 – 13:00</td></tr>
+            <tr><td>Donderdag</td><td>08:00 – 13:00</td></tr>
+            <tr><td>Vrydag</td><td>08:00 – 13:00</td></tr>
+            <tr><td>Saterdag</td><td>Gesluit</td></tr>
+          </table>
+        </div>
+
+        <div class="info-card">
+          <span class="info-card-title">Kontak ons</span>
+          <ul class="contact-list">
+            <li>
+              <svg class="icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/></svg>
+              <div>
+                <span class="contact-label">Adres</span>
+                Andries Bruynstraat &amp; Moutonstraat<br>Horison, Roodepoort
+              </div>
+            </li>
+            <li>
+              <svg class="icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+              <div>
+                <span class="contact-label">Telefoon</span>
+                <a href="tel:0728362209">072 836 2209</a><br>
+                <a href="tel:0117602623">011 760 2623</a>
+              </div>
+            </li>
+            <li>
+              <svg class="icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+              <div>
+                <span class="contact-label">E-pos</span>
+                <a href="mailto:ngk.horison@gmail.com">ngk.horison@gmail.com</a>
+              </div>
+            </li>
+            <li>
+              <svg class="icon" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
+              <div>
+                <span class="contact-label">Sondagoggenddiens</span>
+                <strong style="color:var(--accent);">09:00 elke Sondag</strong>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section warm">
+    <div class="container">
+      <div class="section-eyebrow">Galasiërs 5:22</div>
+      <h2 class="section-heading">Die Vrug van die Gees</h2>
+
+      <p class="fruit-quote">
+        "Een van die duidelikste bewyse dat ek werklik 'n Christen is, is dat die vrug van Christus se Gees in my lewe is. Vroom woorde en getuienisse is mooi maar dit tel min as hierdie innerlike gesindhede en praktiese eienskappe nie bykom nie. Memoriseer die nege dele van die vrug — dink dikwels daaroor."
+        <span class="fruit-ref">— Galasiërs 5:22</span>
+      </p>
+
+      <div class="fruit-grid">
+        <div class="fruit-item"><div class="fruit-num">1</div><div class="fruit-name">Liefde</div></div>
+        <div class="fruit-item"><div class="fruit-num">2</div><div class="fruit-name">Vreugde</div></div>
+        <div class="fruit-item"><div class="fruit-num">3</div><div class="fruit-name">Vrede</div></div>
+        <div class="fruit-item"><div class="fruit-num">4</div><div class="fruit-name">Geduld</div></div>
+        <div class="fruit-item"><div class="fruit-num">5</div><div class="fruit-name">Vriendelikheid</div></div>
+        <div class="fruit-item"><div class="fruit-num">6</div><div class="fruit-name">Goedhartigheid</div></div>
+        <div class="fruit-item"><div class="fruit-num">7</div><div class="fruit-name">Getrouheid</div></div>
+        <div class="fruit-item"><div class="fruit-num">8</div><div class="fruit-name">Nederigheid</div></div>
+        <div class="fruit-item"><div class="fruit-num">9</div><div class="fruit-name">Selfbeheersing</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-eyebrow">Reformatoriese geloofsgrondslag</div>
+      <h2 class="section-heading">Ons Geloofsbelydenis</h2>
+      <p class="section-intro">Die drie pilare waarop ons geloof rus — die erfenis van die Reformasie.</p>
+
+      <div class="solas-grid">
+        <div class="sola-card">
+          <div class="sola-latin">Sola Gratia<br>&amp; Solus Christus</div>
+          <div class="sola-rule"></div>
+          <div class="sola-trans">Genade alleen &amp; Christus alleen</div>
+        </div>
+        <div class="sola-card mid">
+          <div class="sola-latin">Soli Deo Gloria</div>
+          <div class="sola-rule"></div>
+          <div class="sola-trans">Aan God alleen die eer</div>
+        </div>
+        <div class="sola-card">
+          <div class="sola-latin">Sola Fide<br>&amp; Sola Scriptura</div>
+          <div class="sola-rule"></div>
+          <div class="sola-trans">Geloof alleen &amp; Die Skrif alleen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--surface); border-top:1px solid var(--border);">
+    <div class="container">
+      <div class="section-eyebrow">Woordbediening</div>
+      <h2 class="section-heading">Prediking Opnames</h2>
+      <p class="section-intro">Mis 'n diens? Luister gerus na ons prediking op YouTube — beskikbaar vir 2024, 2025 en 2026.</p>
+
+      <div class="youtube-grid">
+        <a class="yt-card" href="https://www.youtube.com/watch?v=mvKd7wGoHg4&list=PL50qQAXFtkoaBs1HYE9wM_Jz4CBy2TR5k" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <svg class="yt-play-icon" width="48" height="48" viewBox="0 0 60 60" fill="currentColor"><path d="M30 5C16.2 5 5 16.2 5 30s11.2 25 25 25 25-11.2 25-25S43.8 5 30 5zm-5 35V20l15 10-15 10z"/></svg>
+            <img src="images/img-youtube-2024.jpg" alt="2024 Prediking" onerror="this.style.display='none'">
+            <span class="yt-badge">YouTube</span>
+          </div>
+          <div class="yt-info">
+            <div class="yt-year">2024 Reeks</div>
+            <div class="yt-title">Prediking Opnames 2024</div>
+            <div class="yt-sub">Kyk die volledige 2024 preekspellys</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://www.youtube.com/playlist?list=PL50qQAXFtkobdNqDaTU1ce95WEuHRW1M8" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <svg class="yt-play-icon" width="48" height="48" viewBox="0 0 60 60" fill="currentColor"><path d="M30 5C16.2 5 5 16.2 5 30s11.2 25 25 25 25-11.2 25-25S43.8 5 30 5zm-5 35V20l15 10-15 10z"/></svg>
+            <img src="images/img-youtube-2025.jpg" alt="2025 Prediking" onerror="this.style.display='none'">
+            <span class="yt-badge">YouTube</span>
+          </div>
+          <div class="yt-info">
+            <div class="yt-year">2025 Reeks</div>
+            <div class="yt-title">Prediking Opnames 2025</div>
+            <div class="yt-sub">Kyk die volledige 2025 preekspellys</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://www.youtube.com/playlist?list=PL50qQAXFtkobaITZ6Xe-FGUTrkjhjP8sH" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <svg class="yt-play-icon" width="48" height="48" viewBox="0 0 60 60" fill="currentColor"><path d="M30 5C16.2 5 5 16.2 5 30s11.2 25 25 25 25-11.2 25-25S43.8 5 30 5zm-5 35V20l15 10-15 10z"/></svg>
+            <img src="images/img-youtube-2026.jpg" alt="2026 Prediking" onerror="this.style.display='none'">
+            <span class="yt-badge">YouTube</span>
+          </div>
+          <div class="yt-info">
+            <div class="yt-year">2026 Reeks</div>
+            <div class="yt-title">Prediking Opnames 2026</div>
+            <div class="yt-sub">Kyk die volledige 2026 preekspellys</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section warm">
+    <div class="container">
+      <div class="section-eyebrow">Gemeenteaktiwiteite</div>
+      <h2 class="section-heading">Basaar &amp; Gemeenskap</h2>
+      <p class="basaar-text">
+        Die jaarlikse kerkbasaar is een van ons gelukkigste samekoms — braai, pannekoek, kerrie en rys, kuns, vriende en kuier. Kom maak deel van 'n warme gemeenskap waar almal tuis voel.
+      </p>
+
+      <div class="basaar-grid">
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-01.jpg" alt="Braai" onerror="this.style.display='none'">
+          <div class="basaar-caption">Braai</div>
+        </div>
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-04.jpg" alt="Vriende" onerror="this.style.display='none'">
+          <div class="basaar-caption">Vriende</div>
+        </div>
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-08.jpg" alt="Kerrie en rys" onerror="this.style.display='none'">
+          <div class="basaar-caption">Kerrie en rys</div>
+        </div>
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-10.jpg" alt="Pannekoek" onerror="this.style.display='none'">
+          <div class="basaar-caption">Pannekoek</div>
+        </div>
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-09.jpg" alt="Kuier" onerror="this.style.display='none'">
+          <div class="basaar-caption">Kuier</div>
+        </div>
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-15.jpg" alt="Kuns" onerror="this.style.display='none'">
+          <div class="basaar-caption">Kuns</div>
+        </div>
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-05.jpg" alt="Vriende" onerror="this.style.display='none'">
+          <div class="basaar-caption">Vriende</div>
+        </div>
+        <div class="basaar-cell">
+          <div class="cell-label">Foto word bygevoeg</div>
+          <img src="images/gallery-basaar-2025-02.jpg" alt="Kombuis" onerror="this.style.display='none'">
+          <div class="basaar-caption">Kombuis</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-strip">
+    <div class="container">
+      <div>
+        <div class="section-eyebrow">Vind ons</div>
+        <h2 class="section-heading">Hoe om ons te Bereik</h2>
+        <p style="color:var(--muted); margin-top:10px; font-size:0.95rem; line-height:1.7;">
+          Andries Bruynstraat &amp; Moutonstraat<br>Horison, Roodepoort
+        </p>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=-26.150596,27.877858" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/></svg>
+          Padaanwysings op Google Maps
+        </a>
+      </div>
+
+      <div class="contact-summary">
+        <div class="contact-summary-title">Kom besoek ons</div>
+        <div class="contact-line">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+          Sondagoggenddiens: <strong style="margin-left:4px;">09:00</strong>
+        </div>
+        <div class="contact-line">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+          Kantoorure: Di–Vr 08:00–13:00
+        </div>
+        <div class="contact-line" style="margin-top:8px;">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          <a href="tel:0728362209">072 836 2209</a>
+        </div>
+        <div class="contact-line">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          <a href="tel:0117602623">011 760 2623</a>
+        </div>
+        <div class="contact-line">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+          <a href="mailto:ngk.horison@gmail.com">ngk.horison@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>NG Gemeente Horison</strong> &nbsp;·&nbsp;
+    Andries Bruynstraat &amp; Moutonstraat, Horison, Roodepoort &nbsp;·&nbsp;
+    <a href="mailto:ngk.horison@gmail.com" style="color:rgba(255,255,255,0.55);">ngk.horison@gmail.com</a>
+  </footer>
+
+</body>
+</html>
