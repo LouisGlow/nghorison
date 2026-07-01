@@ -728,6 +728,24 @@
       padding: 80px 0;
       border-top: 1px solid var(--border);
     }
+    .yt-embed {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      max-width: 900px;
+      margin: 0 auto 28px;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: var(--navy);
+    }
+    .yt-embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .yt-actions { text-align: center; }
     .yt-full-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1045,10 +1063,9 @@
     </a>
 
     <nav class="header-nav" id="hoofnav">
-      <a href="#aankondigings">Aankondigings</a>
-      <a href="#dienste">Dienste</a>
       <a href="#gemeenskap">Gemeenskap</a>
       <a href="#youtube">Prediking</a>
+      <a href="#aankondigings">Aankondigings</a>
       <a href="#kontak">Kontak</a>
     </nav>
 
@@ -1069,75 +1086,6 @@
     <p class="hero-tagline">Sondag 09:00 · Horison, Roodepoort</p>
   </div>
 </div>
-
-<!-- ══════════ SERVICE PANEL ══════════ -->
-<div class="service-panel" id="dienste">
-  <div class="container">
-    <div class="service-grid">
-
-      <div>
-        <div class="service-col-label">Eredienstye</div>
-        <h2 class="service-col-title">Sondagoggenddiens</h2>
-        <table class="service-table">
-          <tr class="highlight-row">
-            <td>Sondag</td>
-            <td>09:00</td>
-          </tr>
-        </table>
-        <a href="https://www.google.com/maps/search/?api=1&query=-26.150596,27.877858" target="_blank" rel="noopener" class="service-btn">
-          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-          Padaanwysings
-        </a>
-      </div>
-
-      <div class="service-divider"></div>
-
-      <div>
-        <div class="service-col-label">Kantoorure</div>
-        <h2 class="service-col-title">Ons is hier</h2>
-        <table class="service-table">
-          <tr class="day-label"><td colspan="2">Weeksdae</td></tr>
-          <tr><td>Maandag</td><td>Gesluit</td></tr>
-          <tr><td>Dinsdag</td><td>08:00 – 13:00</td></tr>
-          <tr><td>Woensdag</td><td>08:00 – 13:00</td></tr>
-          <tr><td>Donderdag</td><td>08:00 – 13:00</td></tr>
-          <tr><td>Vrydag</td><td>08:00 – 13:00</td></tr>
-          <tr><td>Saterdag</td><td>Gesluit</td></tr>
-        </table>
-        <a href="tel:0728362209" class="service-btn">
-          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
-          Skakel ons
-        </a>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══════════ AANKONDIGINGS ══════════ -->
-<section class="ann-section" id="aankondigings">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-eyebrow">Bly op hoogte</div>
-      <h2 class="section-heading">Aankondigings</h2>
-      <p class="section-intro">Weeklikse nuus en aankondigings van die gemeente. Die nuutste verskyn eerste — ouer aankondigings is netjies in die argief hieronder.</p>
-    </div>
-
-    <div class="ann-toolbar" id="ann-filters" role="group" aria-label="Filter aankondigings volgens kategorie"></div>
-
-    <div class="ann-pinned-wrap" id="ann-pinned"></div>
-    <div class="ann-list" id="ann-recent"></div>
-
-    <details class="ann-archive" id="ann-archive">
-      <summary>
-        <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,3 11,8 5,13"/></svg>
-        Vorige aankondigings
-        <span class="arch-count" id="ann-arch-count"></span>
-      </summary>
-      <div id="ann-archive-body"></div>
-    </details>
-  </div>
-</section>
 
 <!-- ══════════ MINISTRY CARDS ══════════ -->
 <section class="ministry-section" id="gemeenskap">
@@ -1175,7 +1123,7 @@
           <div class="ministry-label">Reformatoriese grondslag</div>
           <h3 class="ministry-title">Ons Geloofsbelydenis</h3>
           <p class="ministry-text">Ons staan op die erfenis van die Reformasie — Genade alleen, Christus alleen, Geloof alleen, die Skrif alleen, en aan God alleen die eer.</p>
-          <a href="#dienste" class="ministry-link">
+          <a href="#kontak" class="ministry-link">
             Sluit Sondag by ons aan
             <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
           </a>
@@ -1317,72 +1265,54 @@
           Beskikbaar op YouTube
         </span>
       </div>
-      <h2 class="section-heading">Prediking Opnames</h2>
-      <p class="section-intro">Mis 'n Sondag? Al ons prediking is gratis beskikbaar op YouTube — kyk wanneer dit vir jou pas.</p>
+      <h2 class="section-heading">Preekopnames</h2>
+      <p class="section-intro">Mis 'n Sondag? Die nuutste preekreeks speel hier onder — en al ons vorige reekse is enige tyd op ons YouTube-kanaal beskikbaar.</p>
     </div>
-    <div class="yt-full-grid">
 
-      <a class="yt-card-full" href="https://www.youtube.com/watch?v=mvKd7wGoHg4&list=PL50qQAXFtkoaBs1HYE9wM_Jz4CBy2TR5k" target="_blank" rel="noopener">
-        <div class="yt-card-thumb">
-          <div class="yt-card-overlay"></div>
-          <span class="yt-card-year-badge">2024</span>
-          <img src="assets/images/img-youtube-2024.jpg" alt="2024 Prediking" onerror="this.style.display='none'">        </div>
-        <div class="yt-card-body">
-          <div class="yt-card-label">2024 Reeks</div>
-          <div class="yt-card-title">Prediking Opnames 2024</div>
-          <div class="yt-card-desc">Die volledige 2024 preekspellys — luister na die Blye Boodskap soos verkondig in NG Horison.</div>
-          <span class="yt-watch-link">
-            <svg class="yt-logo-icon" width="32" height="22" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg">
-              <rect width="90" height="63" rx="14" fill="white"/>
-              <path fill="#FF0000" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z"/>
-              <path fill="white" d="M36 45L59.4 31.5 36 18V45z"/>
-            </svg>
-            Kyk op YouTube
-          </span>
-        </div>
-      </a>
-
-      <a class="yt-card-full" href="https://www.youtube.com/playlist?list=PL50qQAXFtkobdNqDaTU1ce95WEuHRW1M8" target="_blank" rel="noopener">
-        <div class="yt-card-thumb">
-          <div class="yt-card-overlay"></div>
-          <span class="yt-card-year-badge">2025</span>
-          <img src="assets/images/img-youtube-2025.jpg" alt="2025 Prediking" onerror="this.style.display='none'">        </div>
-        <div class="yt-card-body">
-          <div class="yt-card-label">2025 Reeks</div>
-          <div class="yt-card-title">Prediking Opnames 2025</div>
-          <div class="yt-card-desc">Die volledige 2025 preekspellys — elke boodskap beskikbaar om te herbeluister of te deel.</div>
-          <span class="yt-watch-link">
-            <svg class="yt-logo-icon" width="32" height="22" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg">
-              <rect width="90" height="63" rx="14" fill="white"/>
-              <path fill="#FF0000" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z"/>
-              <path fill="white" d="M36 45L59.4 31.5 36 18V45z"/>
-            </svg>
-            Kyk op YouTube
-          </span>
-        </div>
-      </a>
-
-      <a class="yt-card-full" href="https://www.youtube.com/playlist?list=PL50qQAXFtkobaITZ6Xe-FGUTrkjhjP8sH" target="_blank" rel="noopener">
-        <div class="yt-card-thumb">
-          <div class="yt-card-overlay"></div>
-          <span class="yt-card-year-badge">2026</span>
-          <img src="assets/images/img-youtube-2026.jpg" alt="2026 Prediking" onerror="this.style.display='none'">        </div>
-        <div class="yt-card-body">
-          <div class="yt-card-label">2026 Reeks</div>
-          <div class="yt-card-title">Prediking Opnames 2026</div>
-          <div class="yt-card-desc">Die nuutste 2026 reeks — volg ons lopende prediking reg deur die jaar.</div>
-          <span class="yt-watch-link">
-            <svg class="yt-logo-icon" width="32" height="22" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg">
-              <rect width="90" height="63" rx="14" fill="white"/>
-              <path fill="#FF0000" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z"/>
-              <path fill="white" d="M36 45L59.4 31.5 36 18V45z"/>
-            </svg>
-            Kyk op YouTube
-          </span>
-        </div>
-      </a>
-
+    <div class="yt-embed">
+      <iframe src="https://www.youtube.com/embed/videoseries?list=PL50qQAXFtkobaITZ6Xe-FGUTrkjhjP8sH"
+              title="NG Horison — nuutste preekreeks"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
     </div>
+
+    <div class="yt-actions">
+      <a class="yt-watch-link" href="https://www.youtube.com/@nghorison" target="_blank" rel="noopener">
+        <svg class="yt-logo-icon" width="32" height="22" viewBox="0 0 90 63" xmlns="http://www.w3.org/2000/svg">
+          <rect width="90" height="63" rx="14" fill="white"/>
+          <path fill="#FF0000" d="M88.1 9.5C87 5.6 84 2.6 80.1 1.5 73.1 0 45 0 45 0S16.9 0 9.9 1.5C6 2.6 3 5.6 1.9 9.5 .4 16.5.4 31.5.4 31.5S.4 46.5 1.9 53.5c1.1 3.9 4.1 6.9 8 8C16.9 63 45 63 45 63s28.1 0 35.1-1.5c3.9-1.1 6.9-4.1 8-8C89.6 46.5 89.6 31.5 89.6 31.5S89.6 16.5 88.1 9.5z"/>
+          <path fill="white" d="M36 45L59.4 31.5 36 18V45z"/>
+        </svg>
+        Kyk al ons preke op YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AANKONDIGINGS ══════════ -->
+<section class="ann-section" id="aankondigings">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Bly op hoogte</div>
+      <h2 class="section-heading">Aankondigings</h2>
+      <p class="section-intro">Weeklikse nuus en aankondigings van die gemeente. Die nuutste verskyn eerste — ouer aankondigings is netjies in die argief hieronder.</p>
+    </div>
+
+    <div class="ann-toolbar" id="ann-filters" role="group" aria-label="Filter aankondigings volgens kategorie"></div>
+
+    <div class="ann-pinned-wrap" id="ann-pinned"></div>
+    <div class="ann-list" id="ann-recent"></div>
+
+    <details class="ann-archive" id="ann-archive">
+      <summary>
+        <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,3 11,8 5,13"/></svg>
+        Vorige aankondigings
+        <span class="arch-count" id="ann-arch-count"></span>
+      </summary>
+      <div id="ann-archive-body"></div>
+    </details>
   </div>
 </section>
 
