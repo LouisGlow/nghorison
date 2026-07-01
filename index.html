@@ -147,6 +147,7 @@
     .header-nav {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 28px;
       flex: 1;
     }
@@ -159,22 +160,6 @@
       white-space: nowrap;
     }
     .header-nav a:hover { opacity: 1; }
-
-    .header-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--accent);
-      color: white;
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 9px 18px;
-      border-radius: 50px;
-      white-space: nowrap;
-      transition: background 0.12s;
-      flex-shrink: 0;
-    }
-    .header-cta:hover { background: var(--accent-dark); }
 
     /* Utility bar — text-size control */
     .util-bar {
@@ -982,7 +967,6 @@
       .header-inner { padding: 12px 16px; gap: 12px; }
       .util-inner { justify-content: center; padding: 7px 16px; }
       .nav-toggle { display: inline-flex; }
-      .header-cta { display: none; }
       .header-nav {
         display: none;
         flex: none;
@@ -1067,11 +1051,6 @@
       <a href="#youtube">Prediking</a>
       <a href="#kontak">Kontak</a>
     </nav>
-
-    <a href="mailto:ngk.horison@gmail.com" class="header-cta">
-      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-      Kontak ons
-    </a>
 
     <button type="button" class="nav-toggle" aria-label="Maak kieslys oop" aria-controls="hoofnav" aria-expanded="false">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
